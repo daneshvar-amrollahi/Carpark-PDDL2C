@@ -9,6 +9,14 @@ class CompileError(Exception):
     def __str__(self):
         return self.message
 
+class ObjectNotFound(CompileError):
+    def __init__(self):
+        self.message = "OBJECT NOT FOUND!"
+
+class PredicateNotFound(CompileError):
+    def __init__(self):
+        self.message = "PREDICATE NOT FOUND!"
+
 
 def readLines():
     with open(inFile,'r') as i:
