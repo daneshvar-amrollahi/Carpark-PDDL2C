@@ -15,30 +15,44 @@ def extractObjectLines(lines):
     for line in lines:
         if (line == "(:objects"):
             flag = 1
-            continue
+        
         if (line == ")"):
             flag = 0
 
         if (flag):
             result.append(line)
-    return result
+
+    return result[1:]
 
 def extractInitLines(lines):
     result = []
     flag = 0
     for line in lines:
-        if (len(line) > 13 and line[:15] == "(= (total-cost)"):
+        if (line == "(:init"):
             flag = 1
-            continue
+            
         if (line == ")"):
             flag = 0
 
         if (flag):
             result.append(line[1:-1])
     
-    return result
+    return result[2:]
 
-            
+def extractGoalLines(lines):
+    result = []
+    flag = 0
+    for line in lines:
+        if (line == "(:goal"):
+            flag = 1
+        
+        if (line == ")"):
+            flag = 0
+
+        if (flag):
+            result.append(line[1:-1])
+
+    return result[2:]
 
 
 def extract():
@@ -61,6 +75,13 @@ def extract():
     for line in inits:
         print(line)
     
+    print("---------------")
+
+    goals = extractGoalLines(lines)
+    print("Goal lines: ")
+    for line in goals:
+        print(line)
+
     #with open(outFile,'w') as o:
     #    for line in lines:
     #        o.write("Current line is:" + line)
