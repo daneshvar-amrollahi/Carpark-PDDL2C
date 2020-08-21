@@ -2,6 +2,14 @@ import sys
 inFile = sys.argv[1]
 outFile = sys.argv[2]
 
+
+class CompileError(Exception):
+    def __init__(self, message):
+        self.message = message
+    def __str__(self):
+        return self.message
+
+
 def readLines():
     with open(inFile,'r') as i:
         lines = i.readlines()
@@ -82,11 +90,16 @@ def extract():
     for line in goals:
         print(line)
 
+    return (objects, inits, goals)
     #with open(outFile,'w') as o:
     #    for line in lines:
     #        o.write("Current line is:" + line)
 
+def writeToFile():
+    pass
+
 def compile():
     extract()
+    writeToFile()
     
 compile()
