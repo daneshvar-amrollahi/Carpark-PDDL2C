@@ -1,8 +1,8 @@
+from errlib import *
 import sys
 inFile = sys.argv[1]
 outFile = sys.argv[2]
 
-from errlib import *
 
 def readLines():
     with open(inFile,'r') as i:
@@ -85,15 +85,16 @@ def extract():
         print(line)
 
     return (objects, inits, goals)
-    #with open(outFile,'w') as o:
-    #    for line in lines:
-    #        o.write("Current line is:" + line)
+    
 
 def writeToFile():
-    pass
+    with open(outFile,'w') as o:
+        o.write("#include <math.h>\n#include <klee/klee.h>")
+        
+
 
 def compile():
-    extract()
+    objects, inits, goals = extract()
     writeToFile()
     
 compile()
