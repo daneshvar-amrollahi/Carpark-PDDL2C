@@ -9,7 +9,7 @@ def readLines():
     result = [line.strip() for line in lines]
     return result
 
-def extractObjects(lines):
+def extractObjectLines(lines):
     result = []
     flag = 0
     for line in lines:
@@ -23,6 +23,24 @@ def extractObjects(lines):
             result.append(line)
     return result
 
+def extractInitLines(lines):
+    result = []
+    flag = 0
+    for line in lines:
+        if (len(line) > 13 and line[:15] == "(= (total-cost)"):
+            flag = 1
+            continue
+        if (line == ")"):
+            flag = 0
+
+        if (flag):
+            result.append(line[1:-1])
+    
+    return result
+
+            
+
+
 def extract():
     lines = readLines()
     print("All lines: ")
@@ -31,9 +49,16 @@ def extract():
 
     print("--------------")
 
-    objects = extractObjects(lines)
+    objects = extractObjectLines(lines)
     print("Object lines: ")
     for line in objects:
+        print(line)
+
+    print("---------------")
+
+    inits = extractInitLines(lines)
+    print("Init lines: ")
+    for line in inits:
         print(line)
     
     #with open(outFile,'w') as o:
