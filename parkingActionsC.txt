@@ -1,0 +1,52 @@
+void move_curb_to_curb(int car, int curbsrc, int curbdest)
+{
+	klee_assume(car-clear[car] == 1);
+	klee_assume(curb-clear[curbdest] == 1);
+	klee_assume(at-curb-num[car][curbsrc] == 1);
+
+	curb-clear[curbdest] = 0;
+	curb-clear[curbsrc] = 1;
+	at-curb-num[car][curbdest] = 1;
+	at-curb-num[car][curbsrc] = 0;
+}
+
+void move-curb-to-car(int car, int curbsrc, int cardest)
+{
+	klee_assume(car-clear[car] == 1);
+	klee_assume(car-clear[cardest] == 1);
+	klee_assume(at-curb-num[car][curbsrc] == 1);
+	klee_assume(at-curb[cardest] == 1);
+
+	car-clear[cardest] = 0;
+	curb-clear[curbsrc] = 1;
+	behind-car[car][cardest] = 1;
+	at-curb-num[car][curbsrc] = 0;
+	at-curb[car] = 0;
+}
+
+void move-car-to-curb(int car, int carsrc, int curbdest)
+{
+	klee_assume(car-clear[car] == 1);
+	klee_assume(curb-clear[curbdest] == 1);
+	klee_assume(behind-car[car][carsrc] == 1);
+
+	curb-clear[curbdest] = 0;
+	car-clear[carsrc] = 1;
+	at-curb-num[car][curbdest] = 1;
+	behind-car[car][carsrc] = 0;
+	at-curb[car] = 1;
+}
+
+
+void move-car-to-car(int car, int carsrc, int cardest)
+{
+	klee_assume(car-clear[car] == 1);
+	klee_assume(car-clear[cardest] == 1);
+	klee_assume(behind-car[car][carsrc] == 1);
+	klee_assume(at-curb[cardest] == 1);
+
+	car-clear[cardest] = 0;
+	car-clear[carsrc] = 1;
+	behind-car[car][cardest] = 1;
+	behind-car[car][carsrc] = 0;
+}

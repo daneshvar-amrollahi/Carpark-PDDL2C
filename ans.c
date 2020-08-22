@@ -14,7 +14,7 @@
 #define car_06 6
 #define car_07 7
 #define car_08 8
-#define car_09 9
+#define car_09 9    
 #define car_10 10
 #define car_11 11
 
@@ -64,7 +64,7 @@ void init()
 
 void goal()
 {
-	if(
+	return(
 		at-curb-num[car_00][curb_0] == 1 && 
 		behind-car[car_07][car_00] == 1 && 
 		at-curb-num[car_01][curb_1] == 1 && 
@@ -78,4 +78,88 @@ void goal()
 		at-curb-num[car_05][curb_5] == 1 && 
 		at-curb-num[car_06][curb_6] == 1 
 	)
+}void move_curb_to_curb(int car, int curbsrc, int curbdest)
+{
+	klee_assume(car-clear[car] == 1);
+	klee_assume(curb-clear[curbdest] == 1);
+	klee_assume(at-curb-num[car][curbsrc] == 1);
+
+	curb-clear[curbdest] = 0;
+	curb-clear[curbsrc] = 1;
+	at-curb-num[car][curbdest] = 1;
+	at-curb-num[car][curbsrc] = 0;
 }
+
+void move-curb-to-car(int car, int curbsrc, int cardest)
+{
+	klee_assume(car-clear[car] == 1);
+	klee_assume(car-clear[cardest] == 1);
+	klee_assume(at-curb-num[car][curbsrc] == 1);
+	klee_assume(at-curb[cardest] == 1);
+
+	car-clear[cardest] = 0;
+	curb-clear[curbsrc] = 1;
+	behind-car[car][cardest] = 1;
+	at-curb-num[car][curbsrc] = 0;
+	at-curb[car] = 0;
+}
+
+void move-car-to-curb(int car, int carsrc, int curbdest)
+{
+	klee_assume(car-clear[car] == 1);
+	klee_assume(curb-clear[curbdest] == 1);
+	klee_assume(behind-car[car][carsrc] == 1);
+
+	curb-clear[curbdest] = 0;
+	car-clear[carsrc] = 1;
+	at-curb-num[car][curbdest] = 1;
+	behind-car[car][carsrc] = 0;
+	at-curb[car] = 1;
+}
+
+
+void move-car-to-car(int car, int carsrc, int cardest)
+{
+	klee_assume(car-clear[car] == 1);
+	klee_assume(car-clear[cardest] == 1);
+	klee_assume(behind-car[car][carsrc] == 1);
+	klee_assume(at-curb[cardest] == 1);
+
+	car-clear[cardest] = 0;
+	car-clear[carsrc] = 1;
+	behind-car[car][cardest] = 1;
+	behind-car[car][carsrc] = 0;
+}
+int main(int argc, const char * argv[]) {
+
+	init();
+
+	while(!goal()){
+		int choice = klee_range(0,numOfActions+1,"choice");
+		//klee_assume ()
+		if (choice == 0) {
+			int car  = klee_range(0,numOfcars+1,"car");
+			int curbsrc  = klee_range(0,numOfcurbs+1,"curbsrc");
+			int curbdest  = klee_range(0,numOfcurbs+1,"curbdest");
+			move_curb_to_curb(car,curbsrc,curbdest);
+		} else if (choice == 2) {
+			int car  = klee_range(0,numOfcars+1,"car");
+			int curbsrc  = klee_range(0,numOfcurbs+1,"curbsrc");
+			int cardest  = klee_range(0,numOfcars+1,"cardest");
+			move_curb_to_car(car,curbsrc,cardest);
+		}else if (choice == 2){
+			int car  = klee_range(0,numOfcars+1,"car");
+			int carsrc  = klee_range(0,numOfcars+1,"carsrc");
+			int curbdest  = klee_range(0,numOfcurbs+1,"curbdest");
+			move_car_to_curb(car,carsrc,curbdest);
+		}else {
+			int car  = klee_range(0,numOfcars+1,"car");
+			int carsrc  = klee_range(0,numOfcars+1,"carsrc");
+			int cardest  = klee_range(0,numOfcars+1,"cardest");
+			move_car_to_car(car,carsrc,cardest);
+		}
+	}
+	
+    return 0;
+}
+
