@@ -1,3 +1,3 @@
 How to run:
 
-python main.py pfile03-011.pddl ans.txt
+python main.py pfile03-011.pddl ans.c
