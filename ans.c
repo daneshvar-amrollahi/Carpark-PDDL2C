@@ -26,3 +26,8 @@
 #define curb_5 5
 #define curb_6 6
 
+bool at-curb[numOfcars + 1];
+bool at-curb-num[numOfcars + 1][numOfcurbs + 1];
+bool behind-car[numOfcars + 1][numOfcars + 1];
+bool car-clear[numOfcars + 1];
+bool curb-clear[numOfcurbs + 1];
