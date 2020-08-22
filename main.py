@@ -138,18 +138,22 @@ def writeGoalFunction(goalLines):
         for line in goalLines[:-1]:
             cur = list(line.split())
             if (cur[0] == "at-curb-num" or cur[0] == "behind-car"): #Should be fixed (based on predicates in domain file) for final compiler
-                o.write("\t\t{}[{}][{}] = 1 && \n".format(cur[0], cur[1], cur[2]))
+                o.write("\t\t{}[{}][{}] == 1 && \n".format(cur[0], cur[1], cur[2]))
             else:
-                o.write("\t\t{}[{}] = 1 && \n".format(cur[0], cur[1]))
+                o.write("\t\t{}[{}] == 1 && \n".format(cur[0], cur[1]))
         
         cur = goalLines[-1].split()
         if (cur[0] == "at-curb-num" or cur[0] == "behind-car"): #Should be fixed (based on predicates in domain file) for final compiler
-            o.write("\t\t{}[{}][{}] = 1 \n".format(cur[0], cur[1], cur[2]))
+            o.write("\t\t{}[{}][{}] == 1 \n".format(cur[0], cur[1], cur[2]))
         else:
-            o.write("\t\t{}[{}] = 1 \n".format(cur[0], cur[1]))
+            o.write("\t\t{}[{}] == 1 \n".format(cur[0], cur[1]))
 
         o.write("\t)\n")
         o.write("}")
+
+def writeActions(): #soon --> pass the actions in the domain.pddl file to this function
+    pass
+    
 
 def writeToFile(objects, initLines, goalLines):
     writeIncludes()
