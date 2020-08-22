@@ -59,31 +59,10 @@ def extractGoalLines(lines):
 
 def extractLines():
     lines = readLines()
-    print("All lines: ")
-    for line in lines:
-        print(line)
-
-    print("--------------")
-
     objects = extractObjectLines(lines)
-    print("Object lines: ")
-    for line in objects:
-        print(line)
-
-    print("---------------")
-
     inits = extractInitLines(lines)
-    print("Init lines: ")
-    for line in inits:
-        print(line)
-    
-    print("---------------")
-
     goals = extractGoalLines(lines)
-    print("Goal lines: ")
-    for line in goals:
-        print(line)
-
+    
     return (objects, inits, goals)
     
 
