@@ -57,7 +57,7 @@ def extractGoalLines(lines):
     return result[2:]
 
 
-def extract():
+def extractLines():
     lines = readLines()
     print("All lines: ")
     for line in lines:
@@ -87,14 +87,39 @@ def extract():
     return (objects, inits, goals)
     
 
-def writeToFile():
+def writeIncludes():
     with open(outFile,'w') as o:
-        o.write("#include <math.h>\n#include <klee/klee.h>")
+        o.write("#include <math.h>\n#include <klee/klee.h>\n\n")
+
+def writeDefines(objects):
+    with open(outFile,'a+') as o:
+        o.write("#define numOfActions 4\n")
+        
+        for obj in objects:
+            o.write("#define numOf{}s {}\n".format(obj[-1], len(obj) - 1))
+
+        for obj in objects:
+            for i in range(len(obj) - 1):
+                o.write("#define {} {}\n".format(obj[i], i))
+            o.write("\n")
+
+def writeToFile(objects):
+    writeIncludes()
+    writeDefines(objects)
+        
         
 
+def extractObjectsFromLines(lines):
+    result = []
+    for line in lines:
+        cur = list(line.split())
+        result.append(cur[:-2] + cur[-1:])
+    return result
 
 def compile():
-    objects, inits, goals = extract()
-    writeToFile()
+    objectLines, initLines, goalLines = extractLines()
+    objects = extractObjectsFromLines(objectLines)
+    print(objects)
+    writeToFile(objects)
     
 compile()
