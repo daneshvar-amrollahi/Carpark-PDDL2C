@@ -130,13 +130,33 @@ def writeInitFunction(initLines):
         o.write("}\n")
         o.write("\n")
 
+def writeGoalFunction(goalLines):
+    with open(outFile, 'a+') as o:
+        o.write("void goal()\n")
+        o.write("{\n")
+        o.write("\tif(\n")
+        for line in goalLines[:-1]:
+            cur = list(line.split())
+            if (cur[0] == "at-curb-num" or cur[0] == "behind-car"): #Should be fixed (based on predicates in domain file) for final compiler
+                o.write("\t\t{}[{}][{}] = 1 && \n".format(cur[0], cur[1], cur[2]))
+            else:
+                o.write("\t\t{}[{}] = 1 && \n".format(cur[0], cur[1]))
+        
+        cur = goalLines[-1].split()
+        if (cur[0] == "at-curb-num" or cur[0] == "behind-car"): #Should be fixed (based on predicates in domain file) for final compiler
+            o.write("\t\t{}[{}][{}] = 1 \n".format(cur[0], cur[1], cur[2]))
+        else:
+            o.write("\t\t{}[{}] = 1 \n".format(cur[0], cur[1]))
 
+        o.write("\t)\n")
+        o.write("}")
 
-def writeToFile(objects, initLines):
+def writeToFile(objects, initLines, goalLines):
     writeIncludes()
     writeDefines(objects)
     writeDeclarations()
     writeInitFunction(initLines)
+    writeGoalFunction(goalLines)
         
 
 def extractObjectsFromLines(lines):
@@ -150,6 +170,6 @@ def compile():
     objectLines, initLines, goalLines = extractLines()
     objects = extractObjectsFromLines(objectLines)
     print(objects)
-    writeToFile(objects, initLines)
+    writeToFile(objects, initLines, goalLines)
     
 compile()
