@@ -65,17 +65,17 @@ void init()
 void goal()
 {
 	if(
-		at-curb-num[car_00][curb_0] = 1 && 
-		behind-car[car_07][car_00] = 1 && 
-		at-curb-num[car_01][curb_1] = 1 && 
-		behind-car[car_08][car_01] = 1 && 
-		at-curb-num[car_02][curb_2] = 1 && 
-		behind-car[car_09][car_02] = 1 && 
-		at-curb-num[car_03][curb_3] = 1 && 
-		behind-car[car_10][car_03] = 1 && 
-		at-curb-num[car_04][curb_4] = 1 && 
-		behind-car[car_11][car_04] = 1 && 
-		at-curb-num[car_05][curb_5] = 1 && 
-		at-curb-num[car_06][curb_6] = 1 
+		at-curb-num[car_00][curb_0] == 1 && 
+		behind-car[car_07][car_00] == 1 && 
+		at-curb-num[car_01][curb_1] == 1 && 
+		behind-car[car_08][car_01] == 1 && 
+		at-curb-num[car_02][curb_2] == 1 && 
+		behind-car[car_09][car_02] == 1 && 
+		at-curb-num[car_03][curb_3] == 1 && 
+		behind-car[car_10][car_03] == 1 && 
+		at-curb-num[car_04][curb_4] == 1 && 
+		behind-car[car_11][car_04] == 1 && 
+		at-curb-num[car_05][curb_5] == 1 && 
+		at-curb-num[car_06][curb_6] == 1 
 	)
 }
