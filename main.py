@@ -98,6 +98,8 @@ def writeDefines(objects):
         for obj in objects:
             o.write("#define numOf{}s {}\n".format(obj[-1], len(obj) - 1))
 
+        o.write("\n")
+
         for obj in objects:
             for i in range(len(obj) - 1):
                 o.write("#define {} {}\n".format(obj[i], i))
