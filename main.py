@@ -86,11 +86,11 @@ def writeDefines(objects):
 
 def writeDeclarations(): #soon --> pass the predicates in the domain.pddl file to this function
     with open(outFile, 'a+') as o:
-        o.write("bool at-curb[numOfcars + 1];\n")
-        o.write("bool at-curb-num[numOfcars + 1][numOfcurbs + 1];\n")
-        o.write("bool behind-car[numOfcars + 1][numOfcars + 1];\n")
-        o.write("bool car-clear[numOfcars + 1];\n")
-        o.write("bool curb-clear[numOfcurbs + 1];\n")
+        o.write("int at-curb[numOfcars + 1];\n")
+        o.write("int at-curb-num[numOfcars + 1][numOfcurbs + 1];\n")
+        o.write("int behind-car[numOfcars + 1][numOfcars + 1];\n")
+        o.write("int car-clear[numOfcars + 1];\n")
+        o.write("int curb-clear[numOfcurbs + 1];\n")
         o.write("\n")
 
 def writeInitFunction(initLines):
