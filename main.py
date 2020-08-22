@@ -112,16 +112,31 @@ def writeDeclarations(): #soon --> pass the predicates in the domain.pddl file t
         o.write("bool behind-car[numOfcars + 1][numOfcars + 1];\n")
         o.write("bool car-clear[numOfcars + 1];\n")
         o.write("bool curb-clear[numOfcurbs + 1];\n")
+        o.write("\n")
 
-def writeInitFunction():
-    pass
+def writeInitFunction(initLines):
+    with open(outFile, 'a+') as o:
+        o.write("void init()\n")
+        o.write("{\n")
+
+        for line in initLines:
+            cur = list(line.split())
+
+            if (cur[0] == "at-curb-num" or cur[0] == "behind-car"): #Should be fixed (based on predicates in domain file) for final compiler
+                o.write("\t{}[{}][{}] = 1;\n".format(cur[0], cur[1], cur[2]))
+            else:
+                o.write("\t{}[{}] = 1;\n".format(cur[0], cur[1]))
+
+        o.write("}\n")
+        o.write("\n")
 
 
-def writeToFile(objects):
+
+def writeToFile(objects, initLines):
     writeIncludes()
     writeDefines(objects)
     writeDeclarations()
-    writeInitFunction()
+    writeInitFunction(initLines)
         
 
 def extractObjectsFromLines(lines):
@@ -135,6 +150,6 @@ def compile():
     objectLines, initLines, goalLines = extractLines()
     objects = extractObjectsFromLines(objectLines)
     print(objects)
-    writeToFile(objects)
+    writeToFile(objects, initLines)
     
 compile()
