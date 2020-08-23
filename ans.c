@@ -2,8 +2,8 @@
 #include <klee/klee.h>
 
 #define numOfActions 4
-#define numOfcars 14
-#define numOfcurbs 8
+#define numOfcars 12
+#define numOfcurbs 7
 
 #define car_00 0
 #define car_01 1
@@ -17,8 +17,6 @@
 #define car_09 9
 #define car_10 10
 #define car_11 11
-#define car_12 12
-#define car_13 13
 
 #define curb_0 0
 #define curb_1 1
@@ -27,116 +25,115 @@
 #define curb_4 4
 #define curb_5 5
 #define curb_6 6
-#define curb_7 7
 
-bool at-curb[numOfcars + 1];
-bool at-curb-num[numOfcars + 1][numOfcurbs + 1];
-bool behind-car[numOfcars + 1][numOfcars + 1];
-bool car-clear[numOfcars + 1];
-bool curb-clear[numOfcurbs + 1];
+int at_curb[numOfcars + 1];
+int at_curb_num[numOfcars + 1][numOfcurbs + 1];
+int behind_car[numOfcars + 1][numOfcars + 1];
+int car_clear[numOfcars + 1];
+int curb_clear[numOfcurbs + 1];
 
 void init()
 {
-	at-curb[car_06] = 1;
-	at-curb-num[car_06][curb_0] = 1;
-	behind-car[car_04][car_06] = 1;
-	car-clear[car_04] = 1;
-	at-curb[car_02] = 1;
-	at-curb-num[car_02][curb_1] = 1;
-	behind-car[car_08][car_02] = 1;
-	car-clear[car_08] = 1;
-	at-curb[car_07] = 1;
-	at-curb-num[car_07][curb_2] = 1;
-	behind-car[car_10][car_07] = 1;
-	car-clear[car_10] = 1;
-	at-curb[car_11] = 1;
-	at-curb-num[car_11][curb_3] = 1;
-	behind-car[car_03][car_11] = 1;
-	car-clear[car_03] = 1;
-	at-curb[car_01] = 1;
-	at-curb-num[car_01][curb_4] = 1;
-	behind-car[car_09][car_01] = 1;
-	car-clear[car_09] = 1;
-	at-curb[car_12] = 1;
-	at-curb-num[car_12][curb_5] = 1;
-	behind-car[car_13][car_12] = 1;
-	car-clear[car_13] = 1;
-	at-curb[car_05] = 1;
-	at-curb-num[car_05][curb_6] = 1;
-	behind-car[car_00][car_05] = 1;
-	car-clear[car_00] = 1;
-	curb-clear[curb_7] = 1;
+	at_curb[car_01] = 1;
+	at_curb_num[car_01][curb_0] = 1;
+	behind_car[car_05][car_01] = 1;
+	car_clear[car_05] = 1;
+	at_curb[car_08] = 1;
+	at_curb_num[car_08][curb_1] = 1;
+	behind_car[car_04][car_08] = 1;
+	car_clear[car_04] = 1;
+	at_curb[car_00] = 1;
+	at_curb_num[car_00][curb_2] = 1;
+	behind_car[car_07][car_00] = 1;
+	car_clear[car_07] = 1;
+	at_curb[car_03] = 1;
+	at_curb_num[car_03][curb_3] = 1;
+	behind_car[car_10][car_03] = 1;
+	car_clear[car_10] = 1;
+	at_curb[car_09] = 1;
+	at_curb_num[car_09][curb_4] = 1;
+	behind_car[car_02][car_09] = 1;
+	car_clear[car_02] = 1;
+	at_curb[car_11] = 1;
+	at_curb_num[car_11][curb_5] = 1;
+	car_clear[car_11] = 1;
+	at_curb[car_06] = 1;
+	at_curb_num[car_06][curb_6] = 1;
+	car_clear[car_06] = 1;
 }
 
-void goal()
+int goal()
 {
-	return(
-		at-curb-num[car_00][curb_0] == 1 && 
-		behind-car[car_08][car_00] == 1 && 
-		at-curb-num[car_01][curb_1] == 1 && 
-		behind-car[car_09][car_01] == 1 && 
-		at-curb-num[car_02][curb_2] == 1 && 
-		behind-car[car_10][car_02] == 1 && 
-		at-curb-num[car_03][curb_3] == 1 && 
-		behind-car[car_11][car_03] == 1 && 
-		at-curb-num[car_04][curb_4] == 1 && 
-		behind-car[car_12][car_04] == 1 && 
-		at-curb-num[car_05][curb_5] == 1 && 
-		behind-car[car_13][car_05] == 1 && 
-		at-curb-num[car_06][curb_6] == 1 && 
-		at-curb-num[car_07][curb_7] == 1 
+	if(
+		at_curb_num[car_00][curb_0] == 1 && 
+		behind_car[car_07][car_00] == 1 && 
+		at_curb_num[car_01][curb_1] == 1 && 
+		behind_car[car_08][car_01] == 1 && 
+		at_curb_num[car_02][curb_2] == 1 && 
+		behind_car[car_09][car_02] == 1 && 
+		at_curb_num[car_03][curb_3] == 1 && 
+		behind_car[car_10][car_03] == 1 && 
+		at_curb_num[car_04][curb_4] == 1 && 
+		behind_car[car_11][car_04] == 1 && 
+		at_curb_num[car_05][curb_5] == 1 && 
+		at_curb_num[car_06][curb_6] == 1 
 	)
-}void move_curb_to_curb(int car, int curbsrc, int curbdest)
-{
-	klee_assume(car-clear[car] == 1);
-	klee_assume(curb-clear[curbdest] == 1);
-	klee_assume(at-curb-num[car][curbsrc] == 1);
-
-	curb-clear[curbdest] = 0;
-	curb-clear[curbsrc] = 1;
-	at-curb-num[car][curbdest] = 1;
-	at-curb-num[car][curbsrc] = 0;
+		return 1;
+	else
+		return 0;
 }
 
-void move-curb-to-car(int car, int curbsrc, int cardest)
+void move_curb_to_curb(int car, int curbsrc, int curbdest)
 {
-	klee_assume(car-clear[car] == 1);
-	klee_assume(car-clear[cardest] == 1);
-	klee_assume(at-curb-num[car][curbsrc] == 1);
-	klee_assume(at-curb[cardest] == 1);
+	klee_assume(car_clear[car] == 1);
+	klee_assume(curb_clear[curbdest] == 1);
+	klee_assume(at_curb_num[car][curbsrc] == 1);
 
-	car-clear[cardest] = 0;
-	curb-clear[curbsrc] = 1;
-	behind-car[car][cardest] = 1;
-	at-curb-num[car][curbsrc] = 0;
-	at-curb[car] = 0;
+	curb_clear[curbdest] = 0;
+	curb_clear[curbsrc] = 1;
+	at_curb_num[car][curbdest] = 1;
+	at_curb_num[car][curbsrc] = 0;
 }
 
-void move-car-to-curb(int car, int carsrc, int curbdest)
+void move_curb_to_car(int car, int curbsrc, int cardest)
 {
-	klee_assume(car-clear[car] == 1);
-	klee_assume(curb-clear[curbdest] == 1);
-	klee_assume(behind-car[car][carsrc] == 1);
+	klee_assume(car_clear[car] == 1);
+	klee_assume(car_clear[cardest] == 1);
+	klee_assume(at_curb_num[car][curbsrc] == 1);
+	klee_assume(at_curb[cardest] == 1);
 
-	curb-clear[curbdest] = 0;
-	car-clear[carsrc] = 1;
-	at-curb-num[car][curbdest] = 1;
-	behind-car[car][carsrc] = 0;
-	at-curb[car] = 1;
+	car_clear[cardest] = 0;
+	curb_clear[curbsrc] = 1;
+	behind_car[car][cardest] = 1;
+	at_curb_num[car][curbsrc] = 0;
+	at_curb[car] = 0;
+}
+
+void move_car_to_curb(int car, int carsrc, int curbdest)
+{
+	klee_assume(car_clear[car] == 1);
+	klee_assume(curb_clear[curbdest] == 1);
+	klee_assume(behind_car[car][carsrc] == 1);
+
+	curb_clear[curbdest] = 0;
+	car_clear[carsrc] = 1;
+	at_curb_num[car][curbdest] = 1;
+	behind_car[car][carsrc] = 0;
+	at_curb[car] = 1;
 }
 
 
-void move-car-to-car(int car, int carsrc, int cardest)
+void move_car_to_car(int car, int carsrc, int cardest)
 {
-	klee_assume(car-clear[car] == 1);
-	klee_assume(car-clear[cardest] == 1);
-	klee_assume(behind-car[car][carsrc] == 1);
-	klee_assume(at-curb[cardest] == 1);
+	klee_assume(car_clear[car] == 1);
+	klee_assume(car_clear[cardest] == 1);
+	klee_assume(behind_car[car][carsrc] == 1);
+	klee_assume(at_curb[cardest] == 1);
 
-	car-clear[cardest] = 0;
-	car-clear[carsrc] = 1;
-	behind-car[car][cardest] = 1;
-	behind-car[car][carsrc] = 0;
+	car_clear[cardest] = 0;
+	car_clear[carsrc] = 1;
+	behind_car[car][cardest] = 1;
+	behind_car[car][carsrc] = 0;
 }
 int main(int argc, const char * argv[]) {
 
