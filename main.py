@@ -158,6 +158,7 @@ def writeMain():
     with open(outFile, 'a+') as o:
         for line in l:
             o.write(line)
+
     
 
 def writeToFile(objects, initLines, goalLines):
