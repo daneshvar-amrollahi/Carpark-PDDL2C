@@ -164,7 +164,8 @@ int main(int argc, const char * argv[]) {
 			move_car_to_car(car,carsrc,cardest);
 		}
 	}
-	
+
+	klee_assert(0); //error signal meaning solution found
     return 0;
 }
 
