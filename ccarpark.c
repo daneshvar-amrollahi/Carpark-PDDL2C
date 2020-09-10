@@ -147,7 +147,7 @@ int main(int argc, const char * argv[]) {
 			int curbsrc  = klee_range(0,numOfcurbs+1,"curbsrc");
 			int curbdest  = klee_range(0,numOfcurbs+1,"curbdest");
 			move_curb_to_curb(car,curbsrc,curbdest);
-		} else if (choice == 2) {
+		} else if (choice == 1) {
 			int car  = klee_range(0,numOfcars+1,"car");
 			int curbsrc  = klee_range(0,numOfcurbs+1,"curbsrc");
 			int cardest  = klee_range(0,numOfcars+1,"cardest");
