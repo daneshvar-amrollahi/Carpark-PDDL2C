@@ -2,7 +2,7 @@
   (:domain parking)
   (:objects
      car_00  car_01  car_02 - car
-     curb_0 curb_1 curb_2 curb_3 curb_4 curb_5 curb_6 - curb
+     curb_0 curb_1 - curb
   )
   (:init
     (= (total-cost) 0)
