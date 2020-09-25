@@ -105,24 +105,24 @@ int main(int argc, const char * argv[]) {
 		int choice = klee_range(0,numOfActions+1,"choice");
 		//klee_assume ()
 		if (choice == 0) {
-			int car  = klee_range(0,numOfcars+1,"car");
-			int curbsrc  = klee_range(0,numOfcurbs+1,"curbsrc");
-			int curbdest  = klee_range(0,numOfcurbs+1,"curbdest");
+			int car  = klee_range(0,numOfcars,"car");
+			int curbsrc  = klee_range(0,numOfcurbs,"curbsrc");
+			int curbdest  = klee_range(0,numOfcurbs,"curbdest");
 			move_curb_to_curb(car,curbsrc,curbdest);
 		} else if (choice == 1) {
-			int car  = klee_range(0,numOfcars+1,"car");
-			int curbsrc  = klee_range(0,numOfcurbs+1,"curbsrc");
-			int cardest  = klee_range(0,numOfcars+1,"cardest");
+			int car  = klee_range(0,numOfcars,"car");
+			int curbsrc  = klee_range(0,numOfcurbs,"curbsrc");
+			int cardest  = klee_range(0,numOfcars,"cardest");
 			move_curb_to_car(car,curbsrc,cardest);
 		}else if (choice == 2){
-			int car  = klee_range(0,numOfcars+1,"car");
-			int carsrc  = klee_range(0,numOfcars+1,"carsrc");
-			int curbdest  = klee_range(0,numOfcurbs+1,"curbdest");
+			int car  = klee_range(0,numOfcars,"car");
+			int carsrc  = klee_range(0,numOfcars,"carsrc");
+			int curbdest  = klee_range(0,numOfcurbs,"curbdest");
 			move_car_to_curb(car,carsrc,curbdest);
 		}else {
-			int car  = klee_range(0,numOfcars+1,"car");
-			int carsrc  = klee_range(0,numOfcars+1,"carsrc");
-			int cardest  = klee_range(0,numOfcars+1,"cardest");
+			int car  = klee_range(0,numOfcars,"car");
+			int carsrc  = klee_range(0,numOfcars,"carsrc");
+			int cardest  = klee_range(0,numOfcars,"cardest");
 			move_car_to_car(car,carsrc,cardest);
 		}
 	}
