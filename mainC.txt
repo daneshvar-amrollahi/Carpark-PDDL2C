@@ -3,7 +3,7 @@ int main(int argc, const char * argv[]) {
 	init();
 
 	while(!goal()){
-		int choice = klee_range(0,numOfActions+1,"choice");
+		int choice = klee_range(0,numOfActions,"choice");
 		//klee_assume ()
 		if (choice == 0) {
 			int car  = klee_range(0,numOfcars,"car");
