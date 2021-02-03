@@ -1,5 +1,6 @@
 #include <math.h>
 #include <klee/klee.h>
+#include <stdio.h>
 
 #define numOfActions 4
 #define numOfcars 12
@@ -65,27 +66,27 @@ void init()
 int goal()
 {
 	int correct = 
-		at_curb_num[car_00][curb_0] == 1 +
-		behind_car[car_07][car_00] == 1 + 
-		at_curb_num[car_01][curb_1] == 1 + 
-		behind_car[car_08][car_01] == 1 + 
-		at_curb_num[car_02][curb_2] == 1 + 
-		behind_car[car_09][car_02] == 1 + 
-		at_curb_num[car_03][curb_3] == 1 + 
-		behind_car[car_10][car_03] == 1 + 
-		at_curb_num[car_04][curb_4] == 1 + 
-		behind_car[car_11][car_04] == 1 + 
-		at_curb_num[car_05][curb_5] == 1 + 
-		at_curb_num[car_06][curb_6] == 1; 
-	
-	return correct == 12;
+		(at_curb_num[car_00][curb_0] == 1) +
+		(behind_car[car_07][car_00] == 1) + 
+		(at_curb_num[car_01][curb_1] == 1) + 
+		(behind_car[car_08][car_01] == 1) + 
+		(at_curb_num[car_02][curb_2] == 1) + 
+		(behind_car[car_09][car_02] == 1) + 
+		(at_curb_num[car_03][curb_3] == 1) + 
+		(behind_car[car_10][car_03] == 1) + 
+		(at_curb_num[car_04][curb_4] == 1) + 
+		(behind_car[car_11][car_04] == 1) + 
+		(at_curb_num[car_05][curb_5] == 1) + 
+		(at_curb_num[car_06][curb_6] == 1); 
+	printf("%d", correct);
+	return (correct == 12);
 }
 
 void move_curb_to_curb(int car, int curbsrc, int curbdest)
 {
-	if (!car_clear[car]) exit(0);
-	if (!curb_clear[curbdest]) exit(0);
-	if (!at_curb_num[car][curbsrc]) exit(0);
+	if (!car_clear[car]) return;
+	if (!curb_clear[curbdest]) return;
+	if (!at_curb_num[car][curbsrc]) return;
 
 	curb_clear[curbdest] = 0;
 	curb_clear[curbsrc] = 1;
@@ -95,10 +96,10 @@ void move_curb_to_curb(int car, int curbsrc, int curbdest)
 
 void move_curb_to_car(int car, int curbsrc, int cardest)
 {
-	if (!car_clear[car]) exit(0);
-	if (!car_clear[cardest]) exit(0);
-	if (!at_curb_num[car][curbsrc]) exit(0);
-	if (!at_curb[cardest]) exit(0);
+	if (!car_clear[car]) return;
+	if (!car_clear[cardest]) return;
+	if (!at_curb_num[car][curbsrc]) return;
+	if (!at_curb[cardest]) return;
 
 	car_clear[cardest] = 0;
 	curb_clear[curbsrc] = 1;
@@ -109,9 +110,9 @@ void move_curb_to_car(int car, int curbsrc, int cardest)
 
 void move_car_to_curb(int car, int carsrc, int curbdest)
 {
-	if (!car_clear[car]) exit(0);
-	if (!curb_clear[curbdest]) exit(0);
-	if (!behind_car[car][carsrc]) exit(0);
+	if (!car_clear[car]) return;
+	if (!curb_clear[curbdest]) return;
+	if (!behind_car[car][carsrc]) return;
 
 	curb_clear[curbdest] = 0;
 	car_clear[carsrc] = 1;
@@ -123,10 +124,10 @@ void move_car_to_curb(int car, int carsrc, int curbdest)
 
 void move_car_to_car(int car, int carsrc, int cardest)
 {
-	if(!car_clear[car]) exit(0);
-	if(!car_clear[cardest]) exit(0);
-	if(!behind_car[car][carsrc]) exit(0);
-	if(!at_curb[cardest]) exit(0);
+	if(!car_clear[car]) return;
+	if(!car_clear[cardest]) return;
+	if(!behind_car[car][carsrc]) return;
+	if(!at_curb[cardest]) return;
 
 	car_clear[cardest] = 0;
 	car_clear[carsrc] = 1;
