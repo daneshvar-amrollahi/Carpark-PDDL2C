@@ -3,8 +3,8 @@
 #include <stdio.h>
 
 #define numOfActions 4
-#define numOfcars 12
-#define numOfcurbs 7
+#define numOfcars 7
+#define numOfcurbs 4
 
 #define car_00 0
 #define car_01 1
@@ -13,19 +13,11 @@
 #define car_04 4
 #define car_05 5
 #define car_06 6
-#define car_07 7
-#define car_08 8
-#define car_09 9
-#define car_10 10
-#define car_11 11
 
 #define curb_0 0
 #define curb_1 1
 #define curb_2 2
 #define curb_3 3
-#define curb_4 4
-#define curb_5 5
-#define curb_6 6
 
 int at_curb[numOfcars + 1];
 int at_curb_num[numOfcars + 1][numOfcurbs + 1];
@@ -42,8 +34,8 @@ int curb_clear[numOfcurbs + 1];
 
 ; =========== GOAL =========== 
 ;  curb_0: car_00 car_05 
-;  curb_1: car_03 car_02 
-;  curb_2: car_03 car_02 
+;  curb_1: car_02 car_01 
+;  curb_2: car_04 car_03 
 ;  curb_3: car_06
 ; =========== /GOAL =========== 
 */
@@ -73,10 +65,10 @@ int goal()
 		(behind_car[car_05][car_00] == 1) + 
 		(at_curb_num[car_02][curb_1] == 1) + 
 		(behind_car[car_01][car_02] == 1) + 
-		(at_curb_num[car_03][curb_2] == 1) + 
-		(behind_car[car_02][car_03] == 1) + 
-		(at_curb_num[car_06][curb_3] == 1) +  
-	printf("%d\n", correct);
+		(at_curb_num[car_04][curb_3] == 1) + 
+		(behind_car[car_03][car_04] == 1) + 
+		(at_curb_num[car_06][curb_3] == 1); 
+	//printf("%d\n", correct);
 	return (correct == 7);
 }
 
