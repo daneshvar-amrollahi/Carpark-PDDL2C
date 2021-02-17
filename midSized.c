@@ -45,18 +45,23 @@ void init()
 	at_curb_num[car_00][curb_0] = 1;
 	behind_car[car_01][car_00] = 1;
 	car_clear[car_01] = 1;
+
 	at_curb[car_02] = 1;
 	at_curb_num[car_02][curb_1] = 1;
 	behind_car[car_03][car_02] = 1;
 	car_clear[car_03] = 1;
+
 	at_curb[car_04] = 1;
 	at_curb_num[car_04][curb_2] = 1;
 	behind_car[car_05][car_04] = 1;
 	car_clear[car_05] = 1;
+
 	at_curb[car_06] = 1;
 	at_curb_num[car_06][curb_3] = 1;
 	car_clear[car_06] = 1;
 }
+
+int cnt = 0;
 
 int goal()
 {
@@ -68,7 +73,10 @@ int goal()
 		(at_curb_num[car_04][curb_3] == 1) + 
 		(behind_car[car_03][car_04] == 1) + 
 		(at_curb_num[car_06][curb_3] == 1); 
-	//printf("%d\n", correct);
+	if (cnt % 1000 == 0)
+        printf("%d\n", correct);
+    
+    cnt++;
 	return (correct == 7);
 }
 
@@ -127,8 +135,8 @@ void move_car_to_car(int car, int carsrc, int cardest)
 int main(int argc, const char * argv[]) {
 
 	init();
-
-	while(!goal()){
+	int actions = 0;
+	while(!goal() && actions < 5){ //while !goal() and actions < 5
 		int choice = klee_range(0,numOfActions,"choice");
 		//klee_assume ()
 		if (choice == 0) {
@@ -152,9 +160,10 @@ int main(int argc, const char * argv[]) {
 			int cardest  = klee_range(0,numOfcars,"cardest");
 			move_car_to_car(car,carsrc,cardest);
 		}
+		actions++;
 	}
-
-	klee_assert(0); //error signal meaning solution found
+	if (goal())
+		klee_assert(0); //error signal meaning solution found
     return 0;
 }
 
